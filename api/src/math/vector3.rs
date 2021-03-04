@@ -22,6 +22,26 @@ impl Vector3 {
 	pub fn length(&self) -> f64 {
 		self.length_squared().sqrt()
 	}
+
+    /// Dot product
+    pub fn dot(&self, other: &Vector3) -> f64 {
+        self.x * other.x + self.y * other.y + self.z + other.z
+    }
+
+    /// Normalize vector
+    pub fn normalize(&self) -> Vector3 {
+        let len = self.length();
+        Vector3 {x: self.x / len, y: self.y / len, z: self.z / len}
+    }
+
+    /// Scale vector, by {t}
+    pub fn scale(&self, t: f64) -> Vector3 {
+        Vector3 {
+            x: self.x * t,
+            y: self.y * t,
+            z: self.z * t
+        }
+    }
 }
 
 impl ops::Add for Vector3 {
@@ -35,6 +55,44 @@ impl ops::Add for Vector3 {
         }
     }
 }
+
+impl ops::Sub for Vector3 {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self::Output {
+        Self {
+            x: self.x - other.x,
+            y: self.y - other.y,
+            z: self.z - other.z
+        }
+    }
+}
+
+impl ops::Mul for Vector3 {
+    type Output = Self;
+
+    fn mul(self, other: Self) -> Self::Output {
+        Self {
+            x: self.x * other.x,
+            y: self.y * other.y,
+            z: self.z * other.z
+        }
+    }
+}
+
+impl ops::Div for Vector3 {
+    type Output = Self;
+
+    fn div(self, other: Self) -> Self::Output {
+        Self {
+            x: self.x / other.x,
+            y: self.y / other.y,
+            z: self.z / other.z
+        }
+    }
+
+}
+
 
 
 #[cfg(test)]
@@ -69,6 +127,42 @@ mod tests {
     }
 
     #[test]
+    fn test_sub() {
+        let vec = Vector3::new(1, 2, 3);
+        let two = Vector3::new(4, 5, 6);
+
+        let output = vec - two;
+        assert_eq!(Vector3::new(-3, -3, -3), output);
+        assert_eq!(output.x, -3.0);
+        assert_eq!(output.y, -3.0);
+        assert_eq!(output.z, -3.0);
+    }
+
+    #[test]
+    fn test_mult() {
+        let vec = Vector3::new(1, 2, 3);
+        let two = Vector3::new(4, 5, 6);
+
+        let output = vec * two;
+        assert_eq!(Vector3::new(4, 10, 18), output);
+        assert_eq!(output.x, 4.0);
+        assert_eq!(output.y, 10.0);
+        assert_eq!(output.z, 18.0);
+    }
+
+    #[test]
+    fn test_div() {
+        let vec = Vector3::new(1, 2, 3);
+        let two = Vector3::new(4, 5, 6);
+
+        let output = vec / two;
+        assert_eq!(Vector3::new(0.25, 0.4, 0.5), output);
+        assert_eq!(output.x, 0.25);
+        assert_eq!(output.y, 0.4);
+        assert_eq!(output.z, 0.5);
+    }
+
+    #[test]
     fn test_squared_length() {
         let res = Vector3::new(1.0, 2.0, 3.0).length_squared();
         assert_eq!(res, 14.0);
@@ -78,5 +172,12 @@ mod tests {
     fn test_length() {
         let res = Vector3::new(1.0, 2.0, 3.0).length();
         assert_eq!(internal::assert_close(res, 14.0_f64.sqrt(), None), true);
+    }
+
+    #[test]
+    fn test_normalize() {
+        let vec = Vector3::new(1.0, 2.0, 3.0);
+        let len = vec.length();
+        assert_eq!(vec.scale(1.0/len), vec.normalize());
     }
 }
