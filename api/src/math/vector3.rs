@@ -17,6 +17,11 @@ impl Vector3 {
     pub fn length_squared(&self) -> f64 {
         self.x*self.x + self.y*self.y + self.z*self.z
     }
+
+	/// Get length of vector, returns sqrt(x^2 + y^2 + z^2)
+	pub fn length(&self) -> f64 {
+		self.length_squared().sqrt()
+	}
 }
 
 impl ops::Add for Vector3 {
@@ -35,6 +40,8 @@ impl ops::Add for Vector3 {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    use crate::internal;
 
     #[test]
     fn test_new() {
@@ -63,5 +70,13 @@ mod tests {
 
     #[test]
     fn test_squared_length() {
+        let res = Vector3::new(1.0, 2.0, 3.0).length_squared();
+        assert_eq!(res, 14.0);
+    }
+
+    #[test]
+    fn test_length() {
+        let res = Vector3::new(1.0, 2.0, 3.0).length();
+        assert_eq!(internal::assert_close(res, 14.0_f64.sqrt(), None), true);
     }
 }

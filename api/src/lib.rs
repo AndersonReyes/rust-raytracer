@@ -1,3 +1,5 @@
+mod internal;
+
 pub mod math;
 
 #[cfg(test)]
