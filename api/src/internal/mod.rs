@@ -14,5 +14,4 @@ mod tests {
         assert_eq!(assert_close(0.1, 0.1, None), true);
         assert_eq!(assert_close(0.1, 0.12, None), false);
     }
-
 }

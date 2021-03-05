@@ -10,18 +10,22 @@ pub struct Vector3 {
 impl Vector3 {
     /// Returns a new vector from x, y, z parameters
     pub fn new<T: Into<f64> + Copy>(x: T, y: T, z: T) -> Vector3 {
-        Vector3 {x: x.into(), y: y.into(), z: z.into()}
+        Vector3 {
+            x: x.into(),
+            y: y.into(),
+            z: z.into(),
+        }
     }
 
     /// Get the squared length of the vector, returns x^2 + y^2 + z^2
     pub fn length_squared(&self) -> f64 {
-        self.x*self.x + self.y*self.y + self.z*self.z
+        self.x * self.x + self.y * self.y + self.z * self.z
     }
 
-	/// Get length of vector, returns sqrt(x^2 + y^2 + z^2)
-	pub fn length(&self) -> f64 {
-		self.length_squared().sqrt()
-	}
+    /// Get length of vector, returns sqrt(x^2 + y^2 + z^2)
+    pub fn length(&self) -> f64 {
+        self.length_squared().sqrt()
+    }
 
     /// Dot product
     pub fn dot(&self, other: &Vector3) -> f64 {
@@ -31,7 +35,11 @@ impl Vector3 {
     /// Normalize vector
     pub fn normalize(&self) -> Vector3 {
         let len = self.length();
-        Vector3 {x: self.x / len, y: self.y / len, z: self.z / len}
+        Vector3 {
+            x: self.x / len,
+            y: self.y / len,
+            z: self.z / len,
+        }
     }
 
     /// Scale vector, by {t}
@@ -39,7 +47,7 @@ impl Vector3 {
         Vector3 {
             x: self.x * t,
             y: self.y * t,
-            z: self.z * t
+            z: self.z * t,
         }
     }
 }
@@ -51,7 +59,7 @@ impl ops::Add for Vector3 {
         Self {
             x: self.x + other.x,
             y: self.y + other.y,
-            z: self.z + other.z
+            z: self.z + other.z,
         }
     }
 }
@@ -63,7 +71,7 @@ impl ops::Sub for Vector3 {
         Self {
             x: self.x - other.x,
             y: self.y - other.y,
-            z: self.z - other.z
+            z: self.z - other.z,
         }
     }
 }
@@ -75,7 +83,7 @@ impl ops::Mul for Vector3 {
         Self {
             x: self.x * other.x,
             y: self.y * other.y,
-            z: self.z * other.z
+            z: self.z * other.z,
         }
     }
 }
@@ -87,16 +95,10 @@ impl ops::Div for Vector3 {
         Self {
             x: self.x / other.x,
             y: self.y / other.y,
-            z: self.z / other.z
+            z: self.z / other.z,
         }
     }
-
 }
-
-
-/// Aliases
-use Vector3 as Point3;
-use Vector3 as Color3;
 
 #[cfg(test)]
 mod tests {
@@ -181,6 +183,6 @@ mod tests {
     fn test_normalize() {
         let vec = Vector3::new(1.0, 2.0, 3.0);
         let len = vec.length();
-        assert_eq!(vec.scale(1.0/len), vec.normalize());
+        assert_eq!(vec.scale(1.0 / len), vec.normalize());
     }
 }
