@@ -76,7 +76,5 @@ mod tests {
             Err(e) => assert_eq!(e.kind(), std::io::ErrorKind::InvalidData),
             Ok(_) => panic!("Expected error!"),
         }
-
-        fs::remove_file("test.ppm").unwrap();
     }
 }
