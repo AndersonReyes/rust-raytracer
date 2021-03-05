@@ -1,2 +1,2 @@
-pub mod vector3;
 pub mod color;
+pub mod vector3;
